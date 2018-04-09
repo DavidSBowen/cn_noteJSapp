@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const readFile = function () {
+const readFile = () => {
     return new Promise((resolve, reject) => {
         fs.readFile(__dirname + '/../notes-data.json', 'utf8', (err, data) => {
             if (err) {
@@ -10,7 +10,7 @@ const readFile = function () {
                     resolve(JSON.parse(data));
                 }
                 catch (err) {
-                    
+                    resolve(err);
                 }
             }
         });

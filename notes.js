@@ -4,9 +4,9 @@ const fs = require('fs');
 
 const { readFile } = require('./supportFunctions/readFile');
 const { writeFile } = require('./supportFunctions/writeFile');
+const { deleteFile } = require('./supportFunctions/deleteFile');
 
 let addNote = (title, body) => {
-
     let notes = [];
     let note = {
         title,
@@ -30,7 +30,6 @@ let addNote = (title, body) => {
                     return data;
                 }
             } else {
-                
                 return [note]
             }
         })
@@ -42,9 +41,10 @@ let addNote = (title, body) => {
 let getAll = () => {
     let storedFile = readFile()
         .then(data => {
-            data.map(a => {
-                console.log(a);
+            let allFiles = data.map(value => {
+                return value;
             });
+            console.log(allFiles);
         })
         .catch(err => console.log(err));
 };
@@ -52,10 +52,8 @@ let getAll = () => {
 let getNote = (title) => {
     let storedFile = readFile()
         .then(data => {
-            let requestedTitle = data.filter((value, index) => {
-                return value.title === title;
-            });
-            requestedTitle = requestedTitle[0]
+            let requestedTitle = data.filter((value) => value.title === title);
+            requestedTitle = requestedTitle[0];
             console.log('Title:', requestedTitle.title);
             console.log('Body:', requestedTitle.body);
         })
@@ -63,7 +61,13 @@ let getNote = (title) => {
 };
 
 let removeNote = (title) => {
-    console.log("Removing note:", title);
+    readFile()
+        .then(data => {
+            return data.filter(note => title.toLowerCase() !== note.title.toLowerCase());
+        })
+        .catch(err => console.log(err))
+        .then(data => writeFile(data))
+        .catch(err => console.log(err));
 }
 
 module.exports = {

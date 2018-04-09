@@ -10,7 +10,7 @@ const readFile = () => {
                     resolve(JSON.parse(data));
                 }
                 catch (err) {
-                    resolve(err);
+                    reject(err);
                 }
             }
         });

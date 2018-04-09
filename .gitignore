@@ -1,3 +1,8 @@
+# json and playground files
+notes-data.json
+playground/
+supportFunctions/backup.json
+
 # Logs
 logs
 *.log
@@ -56,4 +61,3 @@ typings/
 
 # dotenv environment variables file
 .env
-

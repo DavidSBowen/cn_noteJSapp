@@ -1,5 +1,3 @@
-// console.log('starting notes.js');
-
 const fs = require('fs');
 
 const { readFile } = require('./supportFunctions/readFile');
@@ -34,7 +32,6 @@ let addNote = (title, body) => {
                 }
             })
             .catch(err => {
-                // console.log(err)
                 notes.push(note)
                 return notes;
             })
@@ -45,7 +42,7 @@ let addNote = (title, body) => {
                     console.log('Title:', note.title);
                     console.log('Body:', note.body);
                 } else {
-                    console.log('Duplicate entry')
+                    console.log('Duplicate entry.  This title already exists.')
                 };
             })
             .catch(err => console.log(err))
@@ -62,7 +59,10 @@ let getAll = () => {
     try {
         let storedFile = readFile()
             .then(data => {
-                data.map(value => console.log(value));
+                data.map(value => {
+                    console.log('-Title:', value.title);
+                    console.log('--Body:', value.body);
+                });
             })
             .catch(err => console.log(err));
     } catch (e) {
@@ -85,19 +85,31 @@ let getNote = (title) => {
     };
 };
 
-
-// This function still logs that a note was deleted even if the note is not present in the original array
 let removeNote = (title) => {
     try {
+        let match = false;
+        let removedBody = '';
         readFile()
             .then(data => {
-                return data.filter(note => title.toLowerCase() !== note.title.toLowerCase());
+                return data.filter(note => {
+                    if (title.toLowerCase() !== note.title.toLowerCase()) {
+                        return note;
+                    } else {
+                        match = true;
+                        removedBody = note.body
+                    };
+                });
             })
             .catch(err => console.log(err))
             .then(data => {
                 writeFile(data);
-                console.log('Note Deleted:');
-                console.log('Title:', title);
+                if (match) {
+                    console.log('Note Deleted:');
+                    console.log('Title:', title);
+                    console.log('Body:', removedBody);
+                } else {
+                    console.log('Note not found');
+                };
             })
             .catch(err => console.log(err));
     } catch (e) {

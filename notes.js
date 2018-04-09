@@ -27,7 +27,6 @@ let addNote = (title, body) => {
                         return false;
                     } else {
                         data.push(note);
-                        console.log('2', data);
                         return data;
                     }
                 } else {
@@ -41,7 +40,10 @@ let addNote = (title, body) => {
             })
             .then(newNotes => {
                 if (newNotes) {
-                    writeFile(newNotes)
+                    writeFile(newNotes);
+                    console.log('New Note Added:');
+                    console.log('Title:', note.title);
+                    console.log('Body:', note.body);
                 } else {
                     console.log('Duplicate entry')
                 };
@@ -60,10 +62,7 @@ let getAll = () => {
     try {
         let storedFile = readFile()
             .then(data => {
-                let allFiles = data.map(value => {
-                    return value;
-                });
-                console.log(allFiles);
+                data.map(value => console.log(value));
             })
             .catch(err => console.log(err));
     } catch (e) {
@@ -86,6 +85,8 @@ let getNote = (title) => {
     };
 };
 
+
+// This function still logs that a note was deleted even if the note is not present in the original array
 let removeNote = (title) => {
     try {
         readFile()
@@ -93,7 +94,11 @@ let removeNote = (title) => {
                 return data.filter(note => title.toLowerCase() !== note.title.toLowerCase());
             })
             .catch(err => console.log(err))
-            .then(data => writeFile(data))
+            .then(data => {
+                writeFile(data);
+                console.log('Note Deleted:');
+                console.log('Title:', title);
+            })
             .catch(err => console.log(err));
     } catch (e) {
         console.log(e);

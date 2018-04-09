@@ -19,5 +19,5 @@ if (command === 'add') { //this works
 } else if (command === 'remove') { //make this work
     !argv.title ? console.log(titlePlease) : notes.removeNote(argv.title);
 } else {
-    console.log('Command not recognized');
+    console.log('Command not recognized.  Use: list, read, remove, add');
 }

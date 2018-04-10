@@ -8,13 +8,13 @@ const titleBodyPlease = 'Please enter a --title and --body to add';
 
 let command = argv._[0];
 
-if (command === 'add') { //this works
+if (command === 'add') {
     (!argv.title || !argv.body) ? console.log(titleBodyPlease) : notes.addNote(argv.title, argv.body);
-} else if (command === 'list') { //this works
+} else if (command === 'list') {
     notes.getAll();
-} else if (command === 'read') { //this works
+} else if (command === 'read') {
     !argv.title ? console.log(titlePlease) : notes.getNote(argv.title);
-} else if (command === 'remove') { //make this work
+} else if (command === 'remove') {
     !argv.title ? console.log(titlePlease) : notes.removeNote(argv.title);
 } else {
     console.log('Command not recognized.  Use: list, read, remove, add');

@@ -10,6 +10,7 @@ let addNote = (title, body) => {
         title,
         body
     };
+    debugger;
 
     try {
         readFile()
